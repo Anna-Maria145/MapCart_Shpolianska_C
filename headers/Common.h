@@ -2,8 +2,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-//#include <iostream>
-//#include <fstream>
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +11,7 @@
 #include <math.h>
 #include <direct.h>
 
-//using namespace std;
+
 
 
 typedef double Dtype;

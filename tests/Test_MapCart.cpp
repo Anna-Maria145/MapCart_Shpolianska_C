@@ -1,5 +1,5 @@
-# include "..\\headers\Common.h"
-# include "..\\headers\MapCart.h"
+# include "..\headers\Common.h"
+# include "..\headers\MapCart.h"
 
 void CreateMap(char *, Itype, Itype, Itype);
 

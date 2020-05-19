@@ -1,19 +1,15 @@
-//#include <iostream>
-//#include <fstream>
-
-//#include <stdio.h>
 #include "Common.h"
 
-//using namespace std;
+
 
 void DrowLine(Itype **, Itype , Itype, Itype , Itype, Itype, Itype, Itype);
 void DrowRectangle(Itype **, Itype , Itype, Itype , Itype, Itype, Itype, Itype);
 void DrowElips(Itype **, Itype, Itype, Itype, Itype, Itype, Itype, Itype);
 
 //
-// создать карту размером Xsize х Ysize, изобразить на ней линии и фигуры
-// ncol - максимально возможное количество цветов на карте
-// сохранить карту в файле filename
+// СЃРѕР·РґР°С‚СЊ РєР°СЂС‚Сѓ СЂР°Р·РјРµСЂРѕРј Xsize С… Ysize, РёР·РѕР±СЂР°Р·РёС‚СЊ РЅР° РЅРµР№ Р»РёРЅРёРё Рё С„РёРіСѓСЂС‹
+// ncol - РјР°РєСЃРёРјР°Р»СЊРЅРѕ РІРѕР·РјРѕР¶РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С†РІРµС‚РѕРІ РЅР° РєР°СЂС‚Рµ
+// СЃРѕС…СЂР°РЅРёС‚СЊ РєР°СЂС‚Сѓ РІ С„Р°Р№Р»Рµ filename
 //
 void CreateMap(char *filename, Itype Xsize, Itype Ysize, Itype ncol)
 {
@@ -33,7 +29,7 @@ void CreateMap(char *filename, Itype Xsize, Itype Ysize, Itype ncol)
 		exit(-1);
 	}
 	
-	Map = (Itype**)calloc(Ysize, sizeof(Itype*));		//  строки в массиве
+	Map = (Itype**)calloc(Ysize, sizeof(Itype*));		//  СЃС‚СЂРѕРєРё РІ РјР°СЃСЃРёРІРµ
 			
 
 	if (Map == nullptr)
@@ -44,7 +40,7 @@ void CreateMap(char *filename, Itype Xsize, Itype Ysize, Itype ncol)
 
 	for (row = 0; row < Ysize; row++)
 	{
-		Map[row] = (Itype*)calloc(Ysize, sizeof(Itype));			//  столбцы в массиве
+		Map[row] = (Itype*)calloc(Ysize, sizeof(Itype));			//  СЃС‚РѕР»Р±С†С‹ РІ РјР°СЃСЃРёРІРµ
 		if (Map[row] == nullptr)
 		{
 			printf( "CreateMap - Map %i can't be allocated.\n", row);
@@ -55,46 +51,46 @@ void CreateMap(char *filename, Itype Xsize, Itype Ysize, Itype ncol)
 	}
 
 
-	// заполнение карты
-	// нарисовать фигуры на карте Map
-	// фигуры могут накладываться одна на другую и терять свои свойства
+	// Р·Р°РїРѕР»РЅРµРЅРёРµ РєР°СЂС‚С‹
+	// РЅР°СЂРёСЃРѕРІР°С‚СЊ С„РёРіСѓСЂС‹ РЅР° РєР°СЂС‚Рµ Map
+	// С„РёРіСѓСЂС‹ РјРѕРіСѓС‚ РЅР°РєР»Р°РґС‹РІР°С‚СЊСЃСЏ РѕРґРЅР° РЅР° РґСЂСѓРіСѓСЋ Рё С‚РµСЂСЏС‚СЊ СЃРІРѕРё СЃРІРѕР№СЃС‚РІР°
 
-	// !!! НЕДОПУСКАЕТСЯ ВЫХОД ФИГУРЫ ЗА ГРАНИЦЫ КАРТЫ !!! фигура не будет отображена
-	// Максимальный номер цвкта  - 9 ! Устанавливается в Test_MapCart
-	// 0 - цвет фона карты. Устанавливается автоматически
+	// !!! РќР•Р”РћРџРЈРЎРљРђР•РўРЎРЇ Р’Р«РҐРћР” Р¤РР“РЈР Р« Р—Рђ Р“Р РђРќРР¦Р« РљРђР РўР« !!! С„РёРіСѓСЂР° РЅРµ Р±СѓРґРµС‚ РѕС‚РѕР±СЂР°Р¶РµРЅР°
+	// РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ С†РІРєС‚Р°  - 9 ! РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РІ Test_MapCart
+	// 0 - С†РІРµС‚ С„РѕРЅР° РєР°СЂС‚С‹. РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё
 
-	DrowLine(Map, Xsize, Ysize, 15, 60, 75, 59, 5);			// отрезок (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
-	DrowLine(Map, Xsize, Ysize, 35, 70, 75, 83, 2);			// отрезок (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
-	DrowElips(Map, Xsize, Ysize, 21, 44, 12, 18, 7);		// эллипс  (Map, Xsize, Ysize,x0, y0, A, B, color) 
-	DrowLine(Map, Xsize, Ysize, 55, 57, 88, 89, 2);			// отрезок (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
-	DrowRectangle(Map, Xsize, Ysize, 2, 4, 30, 15, 1);		// прямоугольник (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowLine(Map, Xsize, Ysize, 15, 60, 75, 59, 5);			// РѕС‚СЂРµР·РѕРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowLine(Map, Xsize, Ysize, 35, 70, 75, 83, 2);			// РѕС‚СЂРµР·РѕРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowElips(Map, Xsize, Ysize, 21, 44, 12, 18, 7);		// СЌР»Р»РёРїСЃ  (Map, Xsize, Ysize,x0, y0, A, B, color) 
+	DrowLine(Map, Xsize, Ysize, 55, 57, 88, 89, 2);			// РѕС‚СЂРµР·РѕРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowRectangle(Map, Xsize, Ysize, 2, 4, 30, 15, 1);		// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
 
-//	DrowLine(Map, Xsize, Ysize, 3, 6, 3, 6, 5);				// портим прямоугольник
+//	DrowLine(Map, Xsize, Ysize, 3, 6, 3, 6, 5);				// РїРѕСЂС‚РёРј РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє
 
-	DrowRectangle(Map, Xsize, Ysize, 64, 38, 86, 54, 2);	// прямоугольник (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
-	DrowElips(Map, Xsize, Ysize, 52, 25, 22, 8, 4);			// эллипс  (Map, Xsize, Ysize,x0, y0, A, B, color)
-	DrowLine(Map, Xsize, Ysize, 63, 17, 91, 4, 3);			// отрезок (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowRectangle(Map, Xsize, Ysize, 64, 38, 86, 54, 2);	// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
+	DrowElips(Map, Xsize, Ysize, 52, 25, 22, 8, 4);			// СЌР»Р»РёРїСЃ  (Map, Xsize, Ysize,x0, y0, A, B, color)
+	DrowLine(Map, Xsize, Ysize, 63, 17, 91, 4, 3);			// РѕС‚СЂРµР·РѕРє (Map, Xsize, Ysize,x0, y0, x1, y1, color) 
 
-	// запись файла
+	// Р·Р°РїРёСЃСЊ С„Р°Р№Р»Р°
 	
-	// размеры карты и количество цветов
+	// СЂР°Р·РјРµСЂС‹ РєР°СЂС‚С‹ Рё РєРѕР»РёС‡РµСЃС‚РІРѕ С†РІРµС‚РѕРІ
 
 	sw = fwrite( &Xsize, sizeof(Itype), 1, fr);
 	sw = fwrite( &Ysize, sizeof(Itype), 1, fr);
 	sw = fwrite( &ncol, sizeof(Itype), 1, fr);
 
-	// карта
+	// РєР°СЂС‚Р°
 	for (row = 0; row < Ysize; row++)
 	{
 		
-		sw=fwrite(Map[row], sizeof(Itype), Xsize, fr);		// запись карты в файл .dat
+		sw=fwrite(Map[row], sizeof(Itype), Xsize, fr);		// Р·Р°РїРёСЃСЊ РєР°СЂС‚С‹ РІ С„Р°Р№Р» .dat
 
-		for (col = 0; col < Xsize; col++)			// вывод на экран
+		for (col = 0; col < Xsize; col++)			// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 			printf("%i", Map[row][col]);
 		printf("\n");
 	}
 
-	// освобождаем память на карту
+	// РѕСЃРІРѕР±РѕР¶РґР°РµРј РїР°РјСЏС‚СЊ РЅР° РєР°СЂС‚Сѓ
 	for (row = 0; row < Ysize; row++)
 	{
 		free( Map[row]);
@@ -107,7 +103,7 @@ void CreateMap(char *filename, Itype Xsize, Itype Ysize, Itype ncol)
 	return;
 }
 //
-// записать в Map отрезок по конечным точкам цвета color
+// Р·Р°РїРёСЃР°С‚СЊ РІ Map РѕС‚СЂРµР·РѕРє РїРѕ РєРѕРЅРµС‡РЅС‹Рј С‚РѕС‡РєР°Рј С†РІРµС‚Р° color
 //
 void DrowLine(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x1, Itype y1, Itype color)
 {
@@ -129,14 +125,14 @@ void DrowLine(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x
 	dm = abs(d1);
 	if (abs(d2) > abs(d1)) dm = abs(d2);
 
-	// определяем наибольшее max min y, что бы не выходить за него при округлении
+	// РѕРїСЂРµРґРµР»СЏРµРј РЅР°РёР±РѕР»СЊС€РµРµ max min y, С‡С‚Рѕ Р±С‹ РЅРµ РІС‹С…РѕРґРёС‚СЊ Р·Р° РЅРµРіРѕ РїСЂРё РѕРєСЂСѓРіР»РµРЅРёРё
 	if (d1 > 0) { max_y = y1; min_y = y0; }
 	else		{ max_y = y0; min_y = y1; }
 	if (d2 > 0) { max_x = x1; min_x = x0; }
 	else		{ max_x = x0; min_x = x1; }
 
-	// строим прямую
-	if (d2 == 0.0)			// вертикальная прямая
+	// СЃС‚СЂРѕРёРј РїСЂСЏРјСѓСЋ
+	if (d2 == 0.0)			// РІРµСЂС‚РёРєР°Р»СЊРЅР°СЏ РїСЂСЏРјР°СЏ
 	{
 		col = x0;
 		for (row = min_y; row <= max_y; row++)
@@ -146,7 +142,7 @@ void DrowLine(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x
 	}
 	else
 	{
-		if (d1 == 0)		// горизонтальная прямая
+		if (d1 == 0)		// РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅР°СЏ РїСЂСЏРјР°СЏ
 		{
 			row = y0;
 			for (col = min_x; col <=max_x; col++)
@@ -154,14 +150,14 @@ void DrowLine(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x
 				Map[row][col] = color;
 			}
 		}
-		else				// наклонная прямая
+		else				// РЅР°РєР»РѕРЅРЅР°СЏ РїСЂСЏРјР°СЏ
 		{
 			a = (double)d1 / (double)d2;
 			b = (double)y1 - a * (double)x1;
 
 			s = (double)min_x;
 			f = (double)max_x;
-			del = 1.0 / (dm );	// дробим шаг между строчками
+			del = 1.0 / (dm );	// РґСЂРѕР±РёРј С€Р°Рі РјРµР¶РґСѓ СЃС‚СЂРѕС‡РєР°РјРё
 			
 			while ( s < f )
 			{
@@ -177,7 +173,7 @@ void DrowLine(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x
 }
 
 //
-// записать в Map прямоугольник // сторонам поля 
+// Р·Р°РїРёСЃР°С‚СЊ РІ Map РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє // СЃС‚РѕСЂРѕРЅР°Рј РїРѕР»СЏ 
 //
 void DrowRectangle(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype x1, Itype y1, Itype color)
 {
@@ -202,7 +198,7 @@ void DrowRectangle(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, It
 
 	for (row = min_y; row <= max_y; row++)
 	{
-		DrowLine(Map, Xsize, Ysize, x0, row, x1, row, color);		// зарисовываем прямоугольник как множество горизонтальных отрезков 
+		DrowLine(Map, Xsize, Ysize, x0, row, x1, row, color);		// Р·Р°СЂРёСЃРѕРІС‹РІР°РµРј РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє РєР°Рє РјРЅРѕР¶РµСЃС‚РІРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»СЊРЅС‹С… РѕС‚СЂРµР·РєРѕРІ 
 	}
 
 	return;
@@ -210,7 +206,7 @@ void DrowRectangle(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, It
 
 
 //
-// записать в Map элипс 
+// Р·Р°РїРёСЃР°С‚СЊ РІ Map СЌР»РёРїСЃ 
 //
 void DrowElips(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype A, Itype B, Itype color)
 {
@@ -226,11 +222,11 @@ void DrowElips(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype 
 	}
 
 
-	// выбираем больший радиус
+	// РІС‹Р±РёСЂР°РµРј Р±РѕР»СЊС€РёР№ СЂР°РґРёСѓСЃ
 	m = A;
 	if (m < B) m = B;
 
-	d = M_PI / (double)(12 * m);  // шаг изменения угла при построении элипса
+	d = M_PI / (double)(12 * m);  // С€Р°Рі РёР·РјРµРЅРµРЅРёСЏ СѓРіР»Р° РїСЂРё РїРѕСЃС‚СЂРѕРµРЅРёРё СЌР»РёРїСЃР°
 
 	Alfa = 0.0;
 	while (Alfa <= M_PI * 2.0)
@@ -244,7 +240,7 @@ void DrowElips(Itype **Map, Itype Xsize, Itype Ysize, Itype x0, Itype y0, Itype 
 
 		Map[y1][x1] = color;
 
-		DrowLine(Map, Xsize, Ysize, x0, y0, x1, y1, color);		// зарисовываем элипс как множество отрезков от центра к границе
+		DrowLine(Map, Xsize, Ysize, x0, y0, x1, y1, color);		// Р·Р°СЂРёСЃРѕРІС‹РІР°РµРј СЌР»РёРїСЃ РєР°Рє РјРЅРѕР¶РµСЃС‚РІРѕ РѕС‚СЂРµР·РєРѕРІ РѕС‚ С†РµРЅС‚СЂР° Рє РіСЂР°РЅРёС†Рµ
 
 	}
 

@@ -3,13 +3,13 @@
 
 void CreateMap(char *, Itype, Itype, Itype);
 
-extern  PixelList ** Plist;					// список элементов связанной области (все области в одном списке)
-extern  Itype PlCount, PlCurs;				// PlCount - кол-во элементов в Plist, PlCurs - текущий элементов в Plist
-extern	Itype RCount;						// количество связанных областей
-extern	Itype Xsize, Ysize, ncol;			// Map size Xsize x Ysize, ncol количество цветов на карте
-extern	Itype **Map;						// Карта
-extern	Itype *P_Reg;						// P_Reg[i] указывает на начало cвязанные области в Plist
-extern	Itype K_Reg;						// количество cвязанных областей в P_Reg
+extern  PixelList ** Plist;					// СЃРїРёСЃРѕРє СЌР»РµРјРµРЅС‚РѕРІ СЃРІСЏР·Р°РЅРЅРѕР№ РѕР±Р»Р°СЃС‚Рё (РІСЃРµ РѕР±Р»Р°СЃС‚Рё РІ РѕРґРЅРѕРј СЃРїРёСЃРєРµ)
+extern  Itype PlCount, PlCurs;				// PlCount - РєРѕР»-РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ Plist, PlCurs - С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚РѕРІ РІ Plist
+extern	Itype RCount;						// РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРІСЏР·Р°РЅРЅС‹С… РѕР±Р»Р°СЃС‚РµР№
+extern	Itype Xsize, Ysize, ncol;			// Map size Xsize x Ysize, ncol РєРѕР»РёС‡РµСЃС‚РІРѕ С†РІРµС‚РѕРІ РЅР° РєР°СЂС‚Рµ
+extern	Itype **Map;						// РљР°СЂС‚Р°
+extern	Itype *P_Reg;						// P_Reg[i] СѓРєР°Р·С‹РІР°РµС‚ РЅР° РЅР°С‡Р°Р»Рѕ cРІСЏР·Р°РЅРЅС‹Рµ РѕР±Р»Р°СЃС‚Рё РІ Plist
+extern	Itype K_Reg;						// РєРѕР»РёС‡РµСЃС‚РІРѕ cРІСЏР·Р°РЅРЅС‹С… РѕР±Р»Р°СЃС‚РµР№ РІ P_Reg
 
 
 int main()
@@ -26,31 +26,31 @@ int main()
 	Itype El[4];
 	Dtype Len, P, Sq, maxP, maxSq, maxLen, S_ellips;
 
-	 Xsize = 100, Ysize = 100;					// размеры карты
-	 ncol = 10;								// количество цветов на карте
+	 Xsize = 100, Ysize = 100;					// СЂР°Р·РјРµСЂС‹ РєР°СЂС‚С‹
+	 ncol = 10;								// РєРѕР»РёС‡РµСЃС‚РІРѕ С†РІРµС‚РѕРІ РЅР° РєР°СЂС‚Рµ
 
 	
-	FPath = _getcwd(NULL, 0);						// путь на директорию
+	FPath = _getcwd(NULL, 0);						// РїСѓС‚СЊ РЅР° РґРёСЂРµРєС‚РѕСЂРёСЋ
 	strcpy_s(filename, FPath);
 	strcpy_s(file_res, FPath);
 	free(FPath);
 
-	strcat_s(filename, "\\MapCart_test_map.dat");		// имя файла карты
-	strcat_s(file_res, "\\MapCart_test_res.txt");		// имя файла результата
+	strcat_s(filename, "\\MapCart_test_map.dat");		// РёРјСЏ С„Р°Р№Р»Р° РєР°СЂС‚С‹
+	strcat_s(file_res, "\\MapCart_test_res.txt");		// РёРјСЏ С„Р°Р№Р»Р° СЂРµР·СѓР»СЊС‚Р°С‚Р°
 			
 	CreateMap(filename, Xsize, Ysize, ncol);
 
-	ReadColorMap(filename);								// чтение карты
+	ReadColorMap(filename);								// С‡С‚РµРЅРёРµ РєР°СЂС‚С‹
 
 	KL = 0;
 
 	for (row = 0; row < Ysize; row++)
 	{
 		for (col = 0; col < Xsize; col++)
-			if (Map[row][col] != 0) KL++;		// количество закрашенных пикселей на карте
+			if (Map[row][col] != 0) KL++;		// РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РєСЂР°С€РµРЅРЅС‹С… РїРёРєСЃРµР»РµР№ РЅР° РєР°СЂС‚Рµ
 	}
 
-	Plist = (PixelList**)calloc(KL + 1, sizeof(PixelList*)); 		// заказ памяти на массив структур пикселей для построения связных областей
+	Plist = (PixelList**)calloc(KL + 1, sizeof(PixelList*)); 		// Р·Р°РєР°Р· РїР°РјСЏС‚Рё РЅР° РјР°СЃСЃРёРІ СЃС‚СЂСѓРєС‚СѓСЂ РїРёРєСЃРµР»РµР№ РґР»СЏ РїРѕСЃС‚СЂРѕРµРЅРёСЏ СЃРІСЏР·РЅС‹С… РѕР±Р»Р°СЃС‚РµР№
 
 
 	if (Plist == nullptr)
@@ -70,7 +70,7 @@ int main()
 	}
 
 
-	P_Reg = (Itype*)calloc(KL + 1, sizeof(Itype)); 				// начала связных регионов в Plist
+	P_Reg = (Itype*)calloc(KL + 1, sizeof(Itype)); 				// РЅР°С‡Р°Р»Р° СЃРІСЏР·РЅС‹С… СЂРµРіРёРѕРЅРѕРІ РІ Plist
 
 	if (P_Reg == nullptr)
 	{
@@ -78,13 +78,13 @@ int main()
 		exit(-1);
 	}
 
-	CreatePlist();				//создаем списки связанных областей
+	CreatePlist();				//СЃРѕР·РґР°РµРј СЃРїРёСЃРєРё СЃРІСЏР·Р°РЅРЅС‹С… РѕР±Р»Р°СЃС‚РµР№
 
 	printf_s("\n");
 
-	RegionSize();				//определяем размеры связанных областей
+	RegionSize();				//РѕРїСЂРµРґРµР»СЏРµРј СЂР°Р·РјРµСЂС‹ СЃРІСЏР·Р°РЅРЅС‹С… РѕР±Р»Р°СЃС‚РµР№
 
-	err = fopen_s(&fileres, file_res, "wt");				// создать файл для записи результатов
+	err = fopen_s(&fileres, file_res, "wt");				// СЃРѕР·РґР°С‚СЊ С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ
 	if (err != 0)
 	{
 		printf_s("Test_CreateMap - Unable to open file %s",file_res);
@@ -93,48 +93,48 @@ int main()
 
 	for (row = 0; row < Ysize; row++)
 	{
-		for (col = 0; col < Xsize; col++)			// запись карты в файл
+		for (col = 0; col < Xsize; col++)			// Р·Р°РїРёСЃСЊ РєР°СЂС‚С‹ РІ С„Р°Р№Р»
 			fprintf_s(fileres, "%i",Map[row][col]);
 		fprintf_s(fileres, "\n");
 	}
 
 
-	// установка начальных значений для определения характеристик
+	// СѓСЃС‚Р°РЅРѕРІРєР° РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ РґР»СЏ РѕРїСЂРµРґРµР»РµРЅРёСЏ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє
 
-	// отрезков
+	// РѕС‚СЂРµР·РєРѕРІ
 	maxLen = 30.0;		
-	l_col = 2;				// цвет отрезка
-	kl = 0;					// кол-во отрезков L>maxLen & color=l_col
+	l_col = 2;				// С†РІРµС‚ РѕС‚СЂРµР·РєР°
+	kl = 0;					// РєРѕР»-РІРѕ РѕС‚СЂРµР·РєРѕРІ L>maxLen & color=l_col
 
-	// прямоугольников
-	maxP = 0.0;				// периметр
-	maxSq = 0.0;			// площадь
-	kr = 0;					// кол-во
+	// РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРѕРІ
+	maxP = 0.0;				// РїРµСЂРёРјРµС‚СЂ
+	maxSq = 0.0;			// РїР»РѕС‰Р°РґСЊ
+	kr = 0;					// РєРѕР»-РІРѕ
 	rP = -1;
 	rSq = -1;
 
-	// эллипсов
-	ke = 0;					// кол-во
-	S_ellips = 25.0;		// площадь
+	// СЌР»Р»РёРїСЃРѕРІ
+	ke = 0;					// РєРѕР»-РІРѕ
+	S_ellips = 25.0;		// РїР»РѕС‰Р°РґСЊ
 
 
-	m_col = 1;				// цвет макс. области
-	kp = 0;					// кол-во ее пикселей
+	m_col = 1;				// С†РІРµС‚ РјР°РєСЃ. РѕР±Р»Р°СЃС‚Рё
+	kp = 0;					// РєРѕР»-РІРѕ РµРµ РїРёРєСЃРµР»РµР№
 
-	for (i = 0; i < K_Reg; i++)					// цикл по областям
+	for (i = 0; i < K_Reg; i++)					// С†РёРєР» РїРѕ РѕР±Р»Р°СЃС‚СЏРј
 	{
 		printf("\n Region %i \n", i);
 
 		fprintf(fileres, "\n Region %i \n", i);
 
 
-		checked = 0;								// область не проверена
+		checked = 0;								// РѕР±Р»Р°СЃС‚СЊ РЅРµ РїСЂРѕРІРµСЂРµРЅР°
 
-		i_col = Plist[P_Reg[i]]->color;		// цвет области
+		i_col = Plist[P_Reg[i]]->color;		// С†РІРµС‚ РѕР±Р»Р°СЃС‚Рё
 
-		if (i_col == m_col) kp += (P_Reg[i + 1] - P_Reg[i]);		// суммарное количество пикселей цвета m_col
+		if (i_col == m_col) kp += (P_Reg[i + 1] - P_Reg[i]);		// СЃСѓРјРјР°СЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРёРєСЃРµР»РµР№ С†РІРµС‚Р° m_col
 
-		k = IsLine(i, &Len);					// является ли область отрезком
+		k = IsLine(i, &Len);					// СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±Р»Р°СЃС‚СЊ РѕС‚СЂРµР·РєРѕРј
 		if (k > 0)
 		{
 			checked = 1;
@@ -146,7 +146,7 @@ int main()
 			continue;
 		}
 	
-		k = IsRectangle(i, &P, &Sq, El);		// является ли область прямоугольником
+		k = IsRectangle(i, &P, &Sq, El);		// СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±Р»Р°СЃС‚СЊ РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРєРѕРј
 		if (k > 0)
 		{
 			checked = 2;
@@ -165,7 +165,7 @@ int main()
 			continue;
 		}
 
-		k = IsEllips(i, El);					// является ли область эллипсом
+		k = IsEllips(i, El);					// СЏРІР»СЏРµС‚СЃСЏ Р»Рё РѕР±Р»Р°СЃС‚СЊ СЌР»Р»РёРїСЃРѕРј
 		if (k > 0)
 		{
 			checked = 3;
